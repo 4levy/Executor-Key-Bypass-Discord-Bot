@@ -1,9 +1,7 @@
 # Executor Key & Linkvertise Bypass Discord Bot 
 Support Fluxus, Linkvertise, Rekonise, and more...!
 
-
 ## Installation
-
 
 ```bash
   npm install discord.js @discordjs/rest axios queue-typescript async-mutex
