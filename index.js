@@ -10,9 +10,10 @@ const requestQueue = new Map();
 const processingLocks = new Map();
 
 // Config bot
-const botToken = 'BOT TOKEN';
-const CLIENT_ID = 'BOT CLIENT ID';
-const errorChannelId = 'LOG ERROR CHANNEL';
+const botToken = 'BOT TOKEN'; // <-- Add your Bot token
+const CLIENT_ID = 'BOT CLIENT ID'; // <-- Add your Bot client Id
+const errorChannelId = 'ERROR CHANNEL'; // <-- Add your error channel ID
+const logChannelId = 'LOG CHANNEL'; // <-- Add your log channel ID
 
 function getApiLink(content, type) {
     const baseUrl = 'https://robloxexecutorth-api.vercel.app';
@@ -65,6 +66,11 @@ async function processNextRequest(guildId) {
                                 name: '⏱️ **Time Taken:**',
                                 value: `\`\`\`yaml\n${timeTaken.toFixed(2)} seconds\n\`\`\``,
                                 inline: true
+                            },
+                            {
+                                name: '📝 **Requested by:**',
+                                value: `\`\`\`yaml\n${interaction.user.tag}\n\`\`\``,
+                                inline: true
                             }
                         );
 
@@ -82,6 +88,14 @@ async function processNextRequest(guildId) {
                             value: `\`\`\`yaml\n${deviceInfo}\n\`\`\``,
                             inline: true
                         });
+                    }
+
+                    // Send the embed to the log channel
+                    const logChannel = client.channels.cache.get(logChannelId);
+                    if (logChannel) {
+                        logChannel.send({ embeds: [embed] });
+                    } else {
+                        console.error('Log channel is incorrect or not found');
                     }
 
                 } else {
@@ -125,6 +139,7 @@ async function processNextRequest(guildId) {
         }
     });
 }
+
 
 client.once('ready', async () => {
     try {
