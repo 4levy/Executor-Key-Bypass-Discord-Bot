@@ -4,7 +4,7 @@ Support Fluxus, Linkvertise, Rekonise, and more...!
 ## Installation
 
 ```bash
-  npm install discord.js @discordjs/rest axios queue-typescript async-mutex
+  npm install discord.js @discordjs/rest axios queue-typescript async-mutex winston
 ```
     
 ## Running Tests
