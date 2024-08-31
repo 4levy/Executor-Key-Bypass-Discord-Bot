@@ -1,8 +1,10 @@
+require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, Routes, InteractionType, ActivityType, PermissionsBitField } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const axios = require('axios');
 const { Queue } = require('queue-typescript');
 const { Mutex } = require('async-mutex');
+const winston = require('winston');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const serverRequests = new Map();
@@ -11,11 +13,24 @@ const processingLocks = new Map();
 
 // Config bot
 const botToken = 'BOT TOKEN'; // <-- Add your Bot token
-const CLIENT_ID = 'BOT CLIENT ID'; // <-- Add your Bot client Id
-const errorChannelId = 'ERROR CHANNEL'; // <-- Add your error channel ID
+const CLIENT_ID = 'CLIENT ID'; // <-- Add your Bot client Id
+const errorChannelId = 'ERROR LOG'; // <-- Add your error channel ID
 const logChannelId = 'LOG CHANNEL'; // <-- Add your log channel ID
 
-function getApiLink(content, type) {
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.timestamp(),
+        winston.format.printf(({ timestamp, level, message }) => `${timestamp} [${level}]: ${message}`)
+    ),
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'bot.log' })
+    ]
+});
+
+async function getApiLink(content, type) {
     const baseUrl = 'https://robloxexecutorth-api.vercel.app';
     const endpoints = {
         fluxus: 'fluxus',
@@ -52,14 +67,14 @@ async function processNextRequest(guildId) {
                 let embed;
                 if (bypassData) {
                     embed = new EmbedBuilder()
-                        .setTitle('✅ | Bypass Successful!')
+                        .setTitle('``✅`` | Bypass Successful!')
                         .setColor(0x2ECC71)
                         .setThumbnail(interaction.user.displayAvatarURL())
                         .setImage('https://i.ibb.co/whmq1ML/9c73d3f908912fede9cd9ab8af17dc83-4051502925.gif')
                         .addFields(
                             {
                                 name: '🔑 **Key:**',
-                                value: `\`\`\`diff\n+ ${bypassData}\n\`\`\``,
+                                value: `\`\`\`diff\n${bypassData}\n\`\`\``,
                                 inline: false
                             },
                             {
@@ -90,18 +105,17 @@ async function processNextRequest(guildId) {
                         });
                     }
 
-                    // Send the embed to the log channel
                     const logChannel = client.channels.cache.get(logChannelId);
                     if (logChannel) {
                         logChannel.send({ embeds: [embed] });
                     } else {
-                        console.error('Log channel is incorrect or not found');
+                        logger.error('-> Log channel is incorrect or not found');
                     }
 
                 } else {
                     embed = new EmbedBuilder()
-                        .setTitle('❌ | Bypass Failed')
-                        .setDescription('Unable to process.')
+                        .setTitle('``❌`` | Bypass Failed')
+                        .setDescription('\`\`\`diff\n- Unable to process.\n\`\`\`')
                         .setColor(0xFF0000)
                         .addFields({ name: '⏱️ Attempt Time:', value: `\`\`\`yaml\n${timeTaken.toFixed(2)} seconds\n\`\`\``, inline: false });
                 }
@@ -116,7 +130,7 @@ async function processNextRequest(guildId) {
                 await interaction.editReply({ embeds: [embed] });
 
             } catch (error) {
-                console.error(`❌ Error: ${error.message}`);
+                logger.error(`❌ Error: ${error.message}`);
                 const errorEmbed = new EmbedBuilder()
                     .setTitle('❌ Error')
                     .setDescription('```API is down, please try again later.```')
@@ -126,7 +140,7 @@ async function processNextRequest(guildId) {
                 if (errorChannel) {
                     errorChannel.send({ embeds: [errorEmbed] });
                 } else {
-                    console.error('```❌ Error channel is incorrect or not found```');
+                    logger.error('```❌ Error channel is incorrect or not found```');
                 }
 
                 await interaction.editReply({ embeds: [errorEmbed] });
@@ -140,7 +154,6 @@ async function processNextRequest(guildId) {
     });
 }
 
-
 client.once('ready', async () => {
     try {
         await client.user.setPresence({
@@ -153,9 +166,9 @@ client.once('ready', async () => {
             ],
             status: 'idle'
         });
-        console.log(`Logged in as ${client.user.tag} | (ID: ${client.user.id})`);
+        logger.info(`Logged in as ${client.user.tag} | (ID: ${client.user.id})`);
     } catch (error) {
-        console.error('Error setting presence:', error);
+        logger.error('Error setting presence:', error);
     }
     const rest = new REST({ version: '10' }).setToken(botToken);
 
@@ -168,25 +181,18 @@ client.once('ready', async () => {
 
     try {
         await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
-        console.log('Successfully registered application commands.');
+        logger.info('Successfully registered application commands.');
     } catch (error) {
-        console.error('Error registering commands:', error);
+        logger.error('Error registering commands:', error);
     }
 });
 
 client.on('interactionCreate', async interaction => {
     if (interaction.type === InteractionType.ApplicationCommand) {
         if (interaction.commandName === 'setbypass') {
-            const member = await interaction.guild.members.fetch(interaction.user.id);
-
-            if (!member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-                await interaction.reply({ content: '```❌ You do not have permission to use this command.```', ephemeral: true });
-                return;
-            }
-
             const embed = new EmbedBuilder()
                 .setTitle('✨ | __Bypass Menu__')
-                .setDescription('```Select Yourshit\n\nAPI provided by RobloxExecutorth```')
+                .setDescription('```Select Your API\n\nAPI provided by RobloxExecutorth```')
                 .setImage('https://i.ibb.co/8Mhm24D/miyako1-1.gif')
                 .setColor(0xffffff);
 
@@ -197,29 +203,25 @@ client.on('interactionCreate', async interaction => {
                         .setLabel('Fluxus')
                         .setEmoji('<:a_:1204738154045906984>')
                         .setStyle(ButtonStyle.Primary),
-
                     new ButtonBuilder()
                         .setCustomId('linkvertise')
                         .setLabel('Linkvertise')
                         .setEmoji('🔗')
                         .setStyle(ButtonStyle.Primary),
-
                     new ButtonBuilder()
                         .setCustomId('rekonise')
                         .setLabel('Rekonise')
                         .setEmoji('<:evilBwaa:1267141351015977100>')
                         .setStyle(ButtonStyle.Primary),
-
                     new ButtonBuilder()
                         .setCustomId('delta')
                         .setLabel('Delta')
                         .setEmoji('<:1175308654023557140:1204738376742215710>')
                         .setStyle(ButtonStyle.Primary),
-
                     new ButtonBuilder()
                         .setCustomId('arceusx')
                         .setLabel('ArceusX')
-                        .setEmoji('<:eliv:1267141432523624593>')
+                        .setEmoji('🛡<:eliv:1267141432523624593>')
                         .setStyle(ButtonStyle.Primary)
                 );
 
@@ -239,17 +241,17 @@ client.on('interactionCreate', async interaction => {
             .setPlaceholder(`Enter your ${type} link`)
             .setRequired(true);
 
-        const row = new ActionRowBuilder().addComponents(input);
-        modal.addComponents(row);
+        const modalRow = new ActionRowBuilder().addComponents(input);
+        modal.addComponents(modalRow);
 
         await interaction.showModal(modal);
     } else if (interaction.type === InteractionType.ModalSubmit) {
         const type = interaction.customId.split('_')[1];
         const link = interaction.fields.getTextInputValue('linkInput');
 
-        const apiLink = getApiLink(link, type);
+        const apiLink = await getApiLink(link, type);
         if (!apiLink) {
-            await interaction.reply({ content: '```❌ Invalid link provided.```', ephemeral: true });
+            await interaction.reply({ content: '❌ Invalid link provided.', ephemeral: true });
             return;
         }
 
