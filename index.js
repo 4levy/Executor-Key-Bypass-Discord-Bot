@@ -30,13 +30,15 @@ const logger = winston.createLogger({
 });
 
 async function getApiLink(content, type) {
-    const baseUrl = 'https://robloxexecutorth-api.vercel.app';
+    const baseUrl = 'https://api.robloxexecutorth.workers.dev';
     const endpoints = {
         fluxus: 'fluxus',
         linkvertise: 'linkvertise',
         rekonise: 'rekonise',
         delta: 'delta',
-        arceusx: 'arceusx'
+        arceusx: 'arceusx',
+        workink: 'workink',
+        mediafire: 'mediafire'
     };
 
     return endpoints[type] ? `${baseUrl}/${endpoints[type]}?url=${content}` : null;
@@ -224,7 +226,21 @@ client.on('interactionCreate', async interaction => {
                         .setStyle(ButtonStyle.Primary)
                 );
 
-            await interaction.reply({ embeds: [embed], components: [row] });
+            const row2 = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('workink')
+                        .setLabel('Work.ink')
+                        .setEmoji('🔗')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('mediafire')
+                        .setLabel('Mediafire')
+                        .setEmoji('📁')
+                        .setStyle(ButtonStyle.Primary)
+                );
+
+            await interaction.reply({ embeds: [embed], components: [row, row2] });
         }
     } else if (interaction.type === InteractionType.MessageComponent) {
         const type = interaction.customId;
