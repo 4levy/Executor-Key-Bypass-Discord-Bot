@@ -193,7 +193,7 @@ client.on('interactionCreate', async interaction => {
         if (interaction.commandName === 'setbypass') {
             const embed = new EmbedBuilder()
                 .setTitle('✨ | __Bypass Menu__')
-                .setDescription('```Select Your API\n\nAPI provided by RobloxExecutorth```')
+                .setDescription('```Select Yourshit\n\nAPI provided by RobloxExecutorth```')
                 .setImage('https://i.ibb.co/8Mhm24D/miyako1-1.gif')
                 .setColor(0xffffff);
 
