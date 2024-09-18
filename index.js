@@ -38,7 +38,8 @@ async function getApiLink(content, type) {
         delta: 'delta',
         arceusx: 'arceusx',
         workink: 'workink',
-        mediafire: 'mediafire'
+        mediafire: 'mediafire',
+        codex: 'codex'
     };
 
     return endpoints[type] ? `${baseUrl}/${endpoints[type]}?url=${content}` : null;
@@ -237,6 +238,11 @@ client.on('interactionCreate', async interaction => {
                         .setCustomId('mediafire')
                         .setLabel('Mediafire')
                         .setEmoji('📁')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('codex')
+                        .setLabel('Codex')
+                        .setEmoji('☪')
                         .setStyle(ButtonStyle.Primary)
                 );
 
@@ -291,5 +297,6 @@ client.on('interactionCreate', async interaction => {
         }
     }
 });
+
 
 client.login(botToken);
