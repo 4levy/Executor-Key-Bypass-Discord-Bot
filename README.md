@@ -1,7 +1,7 @@
+# Please Star 🌟 Repositories for EVEN more update ❤
+
 # Executor Key & Linkvertise Bypass Discord Bot 
 Support Fluxus, Linkvertise, Rekonise, and more...!
-
-# Please Star 🌟 Repositories for EVEN more update ❤
 
 ## Installation
 
