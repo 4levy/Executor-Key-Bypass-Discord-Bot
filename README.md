@@ -41,5 +41,6 @@ Both commands will start your Node.js application, so you can use either one bas
 # 
 - RobloxExecutorth their Discord server: [DISCORD SERVER](https://discord.gg/T8ssT6TXKz)
 - Zaneru their Discord server: [DISCORD SERVER](https://discord.gg/n9tj34TpC7)
+- Prince their Discord server: [DISCORD SERVER](https://discord.gg/JdfNG6bEQn)
 ###
 Made with ❤ by 4levy
