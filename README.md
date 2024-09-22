@@ -1,4 +1,4 @@
-# Please Star 🌟 Repositories for EVEN more update ❤
+# Please leave a Star 🌟 Repositories for EVEN more update ❤
 
 ##  Latest Updated
 - Sunday 22 Sep 2024
