@@ -4,7 +4,7 @@ Support Fluxus, Linkvertise, Rekonise, and more...!
 ## Installation
 
 ```bash
-  npm install discord.js @discordjs/rest axios queue-typescript async-mutex winston
+  npm install discord.js @discordjs/rest axios queue-typescript async-mutex winston dotenv
 ```
     
 ## Running Tests
@@ -21,8 +21,17 @@ To run your Node.js application, you can use either of the following commands, d
 Both commands will start your Node.js application, so you can use either one based on your preference or specific setup.
 ```
 
-Thanks to RobloxExecutorth for providing an API ❤
+- | Thanks to RobloxExecutorth for providing an API
+- | Thanks to Zaneru Official for providing an API ❤
 
-- Join their Discord server: https://discord.gg/T8ssT6TXKz
+## RobloxExecutorth API | MENU
+![image](https://github.com/user-attachments/assets/7416af46-7893-4095-9a03-e0ea5c6a068c)
+
+## Zaneru API | MENU
+![image](https://github.com/user-attachments/assets/ac2025df-ce06-4bff-91c7-12e9cdd13770)
+
+# 
+- RobloxExecutorth their Discord server: [DISCORD SERVER](https://discord.gg/T8ssT6TXKz)
+- Zaneru their Discord server: [DISCORD SERVER](https://discord.gg/n9tj34TpC7)
 ###
 Made with ❤ by 4levy
