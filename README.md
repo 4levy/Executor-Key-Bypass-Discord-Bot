@@ -1,5 +1,8 @@
 # Please Star 🌟 Repositories for EVEN more update ❤
 
+##  Latest Updated
+- Sunday 22 Sep 2024
+
 # Executor Key & Linkvertise Bypass Discord Bot 
 Support Fluxus, Linkvertise, Rekonise, and more...!
 
@@ -31,6 +34,9 @@ Both commands will start your Node.js application, so you can use either one bas
 
 ## Zaneru API | MENU
 ![image](https://github.com/user-attachments/assets/ac2025df-ce06-4bff-91c7-12e9cdd13770)
+
+## Prince API | MENU
+![image](https://github.com/user-attachments/assets/4a79f99e-ee49-40d6-baeb-f3bec52161f6)
 
 # 
 - RobloxExecutorth their Discord server: [DISCORD SERVER](https://discord.gg/T8ssT6TXKz)
