@@ -258,17 +258,20 @@ client.once('ready', async () => {
     }
 });
 
-// Handling interaction for buttons and modals
 client.on('interactionCreate', async interaction => {
     if (interaction.type === InteractionType.ApplicationCommand) {
         if (interaction.commandName === 'setbypass') {
+            if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+                await interaction.reply({ content: '``❌`` | You do not have permission to use this command.', ephemeral: true });
+                return;
+            }
+
             const embed = new EmbedBuilder()
                 .setTitle('✨ | __Bypass Menu__')
                 .setDescription('```Select Your Service\n\nAPI provided by Zaneru Official```')
                 .setImage('https://i.ibb.co/8Mhm24D/miyako1-1.gif')
                 .setColor(0xffffff);
 
-            // Add buttons for each service
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
