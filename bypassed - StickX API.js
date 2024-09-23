@@ -1,7 +1,7 @@
 // I HAVE NO IDEA HOW THE HELL THIS API WORK THEIR METHOD IS WILD
 
 require('dotenv').config();
-const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, Routes, InteractionType, ActivityType } = require('discord.js');
+const { Client, GatewayIntentBits, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, Routes, InteractionType, ActivityType } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const axios = require('axios');
 const { Queue } = require('queue-typescript');
