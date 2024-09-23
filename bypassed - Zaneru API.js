@@ -189,6 +189,11 @@ client.once('ready', async () => {
 client.on('interactionCreate', async interaction => {
     if (interaction.type === InteractionType.ApplicationCommand) {
         if (interaction.commandName === 'setbypass') {
+            if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+                await interaction.reply({ content: '``❌`` | You do not have permission to use this command.', ephemeral: true });
+                return;
+            }
+
             const embed = new EmbedBuilder()
                 .setTitle('✨ | __Bypass Menu__')
                 .setDescription('```Select Yourshit\n\nAPI provided by Zaneru Official```')
