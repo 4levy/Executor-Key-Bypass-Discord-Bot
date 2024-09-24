@@ -133,20 +133,36 @@ async function processNextRequest(guildId) {
                 await interaction.editReply({ embeds: [embed] });
 
             } catch (error) {
-                logger.error(`❌ Error: ${error.message}`);
-                const errorEmbed = new EmbedBuilder()
-                    .setTitle('❌ Error')
-                    .setDescription('```API is down, please try again later.```')
-                    .setColor(0xFF0000);
+                if (error.response && error.response.status === 429) {
+                    const limitExceededEmbed = new EmbedBuilder()
+                        .setTitle('``⚠️`` | API Limit Exceeded')
+                        .setDescription('```The API has exceeded its rate limit. Please try again later.```')
+                        .setColor(0xFF9900);
+                    
+                    await interaction.editReply({ embeds: [limitExceededEmbed] });
 
-                const errorChannel = client.channels.cache.get(errorChannelId);
-                if (errorChannel) {
-                    errorChannel.send({ embeds: [errorEmbed] });
+                    logger.warn('API limit exceeded: Too many requests made in a short period.');
+
+                    const errorChannel = client.channels.cache.get(errorChannelId);
+                    if (errorChannel) {
+                        errorChannel.send({ embeds: [limitExceededEmbed] });
+                    }
                 } else {
-                    logger.error('```❌ Error channel is incorrect or not found```');
-                }
+                    logger.error(`❌ Error: ${error.message}`);
+                    const errorEmbed = new EmbedBuilder()
+                        .setTitle('❌ Error')
+                        .setDescription('```API is down, please try again later.```')
+                        .setColor(0xFF0000);
 
-                await interaction.editReply({ embeds: [errorEmbed] });
+                    const errorChannel = client.channels.cache.get(errorChannelId);
+                    if (errorChannel) {
+                        errorChannel.send({ embeds: [errorEmbed] });
+                    } else {
+                        logger.error('```❌ Error channel is incorrect or not found```');
+                    }
+
+                    await interaction.editReply({ embeds: [errorEmbed] });
+                }
             } finally {
                 serverRequests.get(guildId).delete(userId);
                 if (queue.length > 0) {
