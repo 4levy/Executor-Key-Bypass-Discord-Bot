@@ -1,27 +1,27 @@
 ```markdown
 # Executor Key & Linkvertise Bypass Discord Bot
 
-Support Fluxus, Linkvertise, Rekonise, and more...!
+Supports Fluxus, Linkvertise, Rekonise, and more...!
 
 ---
 
 ## 📋 Table of Contents
 
 - [Permissions and Limitations](#permissions-and-limitations)
-  - [✅ Permissions (EN)](#✅-permissions-en)
-  - [❌ Limitations (EN)](#❌-limitations-en)
-  - [⚠ Conditions (EN)](#⚠-conditions-en)
-  - [✅ สิทธิ์การใช้งาน (TH)](#✅-สิทธิ์การใช้งาน-th)
-  - [❌ ข้อจำกัด (TH)](#❌-ข้อจำกัด-th)
-  - [⚠ เงื่อนไข (TH)](#⚠-เงื่อนไข-th)
+  - [✅ Permissions (EN)](#permissions-en)
+  - [❌ Limitations (EN)](#limitations-en)
+  - [⚠ Conditions (EN)](#conditions-en)
+  - [✅ สิทธิ์การใช้งาน (TH)](#สิทธิ์การใช้งาน-th)
+  - [❌ ข้อจำกัด (TH)](#ข้อจำกัด-th)
+  - [⚠ เงื่อนไข (TH)](#เงื่อนไข-th)
 - [Installation](#installation)
 - [Running Tests](#running-tests)
-- [Credits](#credits)
 - [API Menus](#api-menus)
 - [Discord Servers](#discord-servers)
+- [Credits](#credits)
 - [Latest Update](#latest-update)
-- [⭐ Support Us](#⭐-support-us)
-- [❤️ Made with Love](#❤️-made-with-love)
+- [⭐ Support Us](#support-us)
+- [❤️ Made with Love](#made-with-love)
 
 ---
 
@@ -34,11 +34,11 @@ Support Fluxus, Linkvertise, Rekonise, and more...!
 - **Private use**
 
 ### ❌ Limitations (EN)
-- No **Liability** for damages, unless **damages result from gross negligence or intentional misconduct**. Claims for damages must be **reasonable** and **in moderation**.
-- No **Warranty**
+- No **Liability** for damages, except in cases of **gross negligence or intentional misconduct**.
+- No **Warranty**.
 
 ### ⚠ Conditions (EN)
-- Must include **License** and **Copyright notice**
+- Must include **License** and **Copyright notice**.
 
 ---
 
@@ -49,11 +49,11 @@ Support Fluxus, Linkvertise, Rekonise, and more...!
 - **การใช้งานส่วนตัว**
 
 ### ❌ ข้อจำกัด (TH)
-- ไม่มี **ความรับผิดชอบ** สำหรับความเสียหาย ยกเว้นในกรณีของ **ความประมาทเลินเล่ออย่างร้ายแรงหรือเจตนาทำให้เกิดความเสียหาย** การเรียกร้องค่าเสียหายต้องเป็นไป **ในความเหมาะสม** และ **ไม่เกินความจำเป็น**
-- ไม่มี **การรับประกัน**
+- ไม่มี **ความรับผิดชอบ** สำหรับความเสียหาย ยกเว้นในกรณีของ **ความประมาทเลินเล่ออย่างร้ายแรงหรือเจตนาทำให้เกิดความเสียหาย**.
+- ไม่มี **การรับประกัน**.
 
 ### ⚠ เงื่อนไข (TH)
-- ต้องระบุ **ลิขสิทธิ์** และ **ใบอนุญาต**
+- ต้องระบุ **ลิขสิทธิ์** และ **ใบอนุญาต**.
 
 ---
 
@@ -65,33 +65,25 @@ To install the necessary dependencies, run the following command:
 npm install discord.js @discordjs/rest axios queue-typescript async-mutex winston dotenv
 ```
 
+---
+
 ## Running Tests
 
-To run your Node.js application, you can use either of the following commands, depending on your setup:
+To run the Node.js application, use one of the following commands:
 
 1. **Using `node .`**  
-   This command runs the Node.js application starting from the `index.js` file in the current directory (assuming `index.js` is the main file).
+   Runs the Node.js app starting from the `index.js` file in the current directory.
 
    ```bash
    node .
    ```
 
 2. **Using `node index.js`**  
-   This command directly specifies `index.js` as the file to run.
+   Directly runs the `index.js` file.
 
    ```bash
    node index.js
    ```
-
-Both commands will start your Node.js application, so you can use either one based on your preference or specific setup.
-
----
-
-## Credits
-
-- 🙏 **Thanks to** [RobloxExecutorth](https://discord.gg/T8ssT6TXKz) for providing an API
-- 🙏 **Thanks to** [Zaneru Official](https://discord.gg/n9tj34TpC7) for providing an API ❤
-- 🙏 **Thanks to** [Prince](https://discord.gg/JdfNG6bEQn) for providing an API
 
 ---
 
@@ -116,6 +108,14 @@ Both commands will start your Node.js application, so you can use either one bas
 
 ---
 
+## Credits
+
+- 🙏 **Thanks to** [RobloxExecutorth](https://discord.gg/T8ssT6TXKz) for providing an API.
+- 🙏 **Thanks to** [Zaneru Official](https://discord.gg/n9tj34TpC7) for providing an API.
+- 🙏 **Thanks to** [Prince](https://discord.gg/JdfNG6bEQn) for providing an API.
+
+---
+
 ## Latest Update
 
 - **Updated On:** Sunday, 22 September 2024
@@ -124,12 +124,12 @@ Both commands will start your Node.js application, so you can use either one bas
 
 ## ⭐ Support Us
 
-Please leave a **Star** 🌟 on our repository for **EVEN more updates** ❤
+Please leave a **Star** 🌟 on our repository for **EVEN more updates** ❤.
 
 ---
 
 ## ❤️ Made with Love
 
-Made with ❤ by **4levy**
+Made with ❤ by **4levy**.
 
 ---
