@@ -98,6 +98,9 @@ To run the Node.js application, use one of the following commands:
 ### Prince API | MENU
 ![Prince API Menu](https://github.com/user-attachments/assets/4a79f99e-ee49-40d6-baeb-f3bec52161f6)
 
+### XKeybypass API | MENU
+![Xkeybypass API Menu](https://github.com/user-attachments/assets/d0dcfbd3-5b10-4de6-85f1-900886a7e451)
+
 ---
 
 ## Discord Servers
