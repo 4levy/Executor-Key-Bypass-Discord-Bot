@@ -17,7 +17,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const errorChannelId = process.env.ERROR_CHANNEL_ID;
 const logChannelId = process.env.LOG_CHANNEL_ID;
 const API_KEY = "API KEY"; //--> PUT YOUR API KEY JOIN XKEYBYPESS / https://discord.gg/8C5292EqBf
-// Logger setup
+
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
