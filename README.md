@@ -101,6 +101,10 @@ To run the Node.js application, use one of the following commands:
 ### XKeybypass API | MENU
 ![Xkeybypass API Menu](https://github.com/user-attachments/assets/d0dcfbd3-5b10-4de6-85f1-900886a7e451)
 
+### triple API | MENU
+![Triple API MENU](https://github.com/user-attachments/assets/21368ed6-50e4-41e2-8beb-6798d024e4a8)
+
+
 ---
 
 ## Discord Servers
@@ -108,6 +112,8 @@ To run the Node.js application, use one of the following commands:
 - **RobloxExecutorth Discord Server:** [Join Here](https://discord.gg/T8ssT6TXKz)
 - **Zaneru Discord Server:** [Join Here](https://discord.gg/n9tj34TpC7)
 - **Prince Discord Server:** [Join Here](https://discord.gg/JdfNG6bEQn)
+- **StickX Discord Server:** [Join Here](https://discord.gg/WX5GTAs4GG)
+- **Triple Discord Server:** [Join Here](https://discord.gg/pcvm4UXfMR)
 
 ---
 
@@ -116,12 +122,14 @@ To run the Node.js application, use one of the following commands:
 - 🙏 **Thanks to** [RobloxExecutorth](https://discord.gg/T8ssT6TXKz) for providing an API.
 - 🙏 **Thanks to** [Zaneru Official](https://discord.gg/n9tj34TpC7) for providing an API.
 - 🙏 **Thanks to** [Prince](https://discord.gg/JdfNG6bEQn) for providing an API.
+- 🙏 **Thanks to** [StickX](https://discord.gg/WX5GTAs4GG) for providing an API.
+- 🙏 **Thanks to** [Triple](https://discord.gg/pcvm4UXfMR) for providing an API.
 
 ---
 
 ## Latest Update
 
-- **Updated On:** Sunday, 22 September 2024
+- **Updated On:** Saturday, 28 September 2024
 
 ---
 
