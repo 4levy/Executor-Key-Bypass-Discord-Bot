@@ -101,7 +101,7 @@ To run the Node.js application, use one of the following commands:
 ### XKeybypass API | MENU
 ![Xkeybypass API Menu](https://github.com/user-attachments/assets/d0dcfbd3-5b10-4de6-85f1-900886a7e451)
 
-### triple API | MENU
+### Triple API | MENU
 ![Triple API MENU](https://github.com/user-attachments/assets/21368ed6-50e4-41e2-8beb-6798d024e4a8)
 
 
