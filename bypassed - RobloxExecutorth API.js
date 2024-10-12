@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, GatewayIntentBits, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, Routes, InteractionType, ActivityType, PermissionsBitField } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, Routes, InteractionType, ActivityType, PermissionsBitField } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const axios = require('axios');
 const { Queue } = require('queue-typescript');
@@ -133,36 +133,20 @@ async function processNextRequest(guildId) {
                 await interaction.editReply({ embeds: [embed] });
 
             } catch (error) {
-                if (error.response && error.response.status === 429) {
-                    const limitExceededEmbed = new EmbedBuilder()
-                        .setTitle('``⚠️`` | API Limit Exceeded')
-                        .setDescription('```The API has exceeded its rate limit. Please try again later.```')
-                        .setColor(0xFF9900);
-                    
-                    await interaction.editReply({ embeds: [limitExceededEmbed] });
+                logger.error(`❌ Error: ${error.message}`);
+                const errorEmbed = new EmbedBuilder()
+                    .setTitle('❌ Error')
+                    .setDescription('```API is down, please try again later.```')
+                    .setColor(0xFF0000);
 
-                    logger.warn('API limit exceeded: Too many requests made in a short period.');
-
-                    const errorChannel = client.channels.cache.get(errorChannelId);
-                    if (errorChannel) {
-                        errorChannel.send({ embeds: [limitExceededEmbed] });
-                    }
+                const errorChannel = client.channels.cache.get(errorChannelId);
+                if (errorChannel) {
+                    errorChannel.send({ embeds: [errorEmbed] });
                 } else {
-                    logger.error(`❌ Error: ${error.message}`);
-                    const errorEmbed = new EmbedBuilder()
-                        .setTitle('❌ Error')
-                        .setDescription('```API is down, please try again later.```')
-                        .setColor(0xFF0000);
-
-                    const errorChannel = client.channels.cache.get(errorChannelId);
-                    if (errorChannel) {
-                        errorChannel.send({ embeds: [errorEmbed] });
-                    } else {
-                        logger.error('```❌ Error channel is incorrect or not found```');
-                    }
-
-                    await interaction.editReply({ embeds: [errorEmbed] });
+                    logger.error('```❌ Error channel is incorrect or not found```');
                 }
+
+                await interaction.editReply({ embeds: [errorEmbed] });
             } finally {
                 serverRequests.get(guildId).delete(userId);
                 if (queue.length > 0) {
@@ -209,11 +193,6 @@ client.once('ready', async () => {
 client.on('interactionCreate', async interaction => {
     if (interaction.type === InteractionType.ApplicationCommand) {
         if (interaction.commandName === 'setbypass') {
-            if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-                await interaction.reply({ content: '``❌`` | You do not have permission to use this command.', ephemeral: true });
-                return;
-            }
-
             const embed = new EmbedBuilder()
                 .setTitle('✨ | __Bypass Menu__')
                 .setDescription('```Select Yourshit\n\nAPI provided by RobloxExecutorth```')
@@ -230,12 +209,12 @@ client.on('interactionCreate', async interaction => {
                     new ButtonBuilder()
                         .setCustomId('linkvertise')
                         .setLabel('Linkvertise')
-                        .setEmoji('🔗')
+                        .setEmoji('<:Linkvertise:1266787483169849365>')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('rekonise')
                         .setLabel('Rekonise')
-                        .setEmoji('<:evilBwaa:1267141351015977100>')
+                        .setEmoji('<:Rekonise:1273990792062697595>')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('delta')
@@ -245,7 +224,7 @@ client.on('interactionCreate', async interaction => {
                     new ButtonBuilder()
                         .setCustomId('arceusx')
                         .setLabel('ArceusX')
-                        .setEmoji('🛡<:eliv:1267141432523624593>')
+                        .setEmoji('<:Arceusx:1278374438743703657>')
                         .setStyle(ButtonStyle.Primary)
                 );
 
@@ -254,17 +233,17 @@ client.on('interactionCreate', async interaction => {
                     new ButtonBuilder()
                         .setCustomId('workink')
                         .setLabel('Work.ink')
-                        .setEmoji('🔗')
+                        .setEmoji('<:Workink:1284411465872441426>')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('mediafire')
                         .setLabel('Mediafire')
-                        .setEmoji('📁')
+                        .setEmoji('<:mediafire1:1289437115230322729>')
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('codex')
                         .setLabel('Codex')
-                        .setEmoji('☪')
+                        .setEmoji('<:Codex:1273713250223259813>')
                         .setStyle(ButtonStyle.Primary)
                 );
 
