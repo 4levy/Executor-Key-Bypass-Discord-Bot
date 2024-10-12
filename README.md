@@ -104,6 +104,8 @@ To run the Node.js application, use one of the following commands:
 ### Triple API | MENU
 ![Triple API MENU](https://github.com/user-attachments/assets/21368ed6-50e4-41e2-8beb-6798d024e4a8)
 
+### Kazi API | MENU
+![Kazi API MENU](https://github.com/user-attachments/assets/87f32f77-0b2c-4e31-a6b2-31b6f79435f4)
 
 ---
 
@@ -114,7 +116,7 @@ To run the Node.js application, use one of the following commands:
 - **Prince Discord Server:** [Join Here](https://discord.gg/JdfNG6bEQn)
 - **StickX Discord Server:** [Join Here](https://discord.gg/WX5GTAs4GG)
 - **Triple Discord Server:** [Join Here](https://discord.gg/pcvm4UXfMR)
-
+- **Kazi Discord Server:** [Unknow]
 ---
 
 ## Credits
@@ -124,7 +126,7 @@ To run the Node.js application, use one of the following commands:
 - 🙏 **Thanks to** [Prince](https://discord.gg/JdfNG6bEQn) for providing an API.
 - 🙏 **Thanks to** [StickX](https://discord.gg/WX5GTAs4GG) for providing an API.
 - 🙏 **Thanks to** [Triple](https://discord.gg/pcvm4UXfMR) for providing an API.
-
+- 🙏 **Thanks to** [Kazi] (Unknow) for providing an API.
 ---
 
 ## Latest Update
