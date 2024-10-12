@@ -57,17 +57,6 @@ node index.js
 
 </details>
 
-## 🌐 Discord Servers
-
-Join our vibrant communities:
-
-- [RobloxExecutorth](https://discord.gg/T8ssT6TXKz)
-- [Zaneru](https://discord.gg/n9tj34TpC7)
-- [Prince](https://discord.gg/JdfNG6bEQn)
-- [StickX](https://discord.gg/WX5GTAs4GG)
-- [Triple](https://discord.gg/pcvm4UXfMR)
-- Kazi (TBA)
-
 ## 👏 Credits
 
 A big thank you to our API providers:
