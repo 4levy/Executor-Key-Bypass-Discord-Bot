@@ -21,10 +21,7 @@
 
 ## 🚀 Features
 
-- 🔗 Bypass Linkvertise links with ease
-- 🔑 Quick access to Fluxus executor keys
-- 🌐 Extended support for Rekonise and other platforms
-- 🤖 User-friendly Discord bot interface
+- The repositorie name said it all
 
 ## 💻 Installation
 
