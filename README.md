@@ -8,25 +8,6 @@
 
 </div>
 
----
-
-A powerful Discord bot designed to bypass executor keys, Linkvertise links, and more! Supports various executors like **Fluxus**, **Rekonise**, **Linkvertise**, and others.
-
----
-
-## 📚 Table of Contents
-
-- [💻 Installation](#-installation)
-- [🚀 Usage](#-usage)
-- [🖥️ API Menus](#-api-menus)
-- [👏 Credits](#-credits)
-- [📜 License](#-license)
-- [⭐ Support Us](#-support-us)
-- [🔄 Latest Update](#-latest-update)
-- [📞 Contact](#-contact)
-
----
-
 ## 💻 Installation
 
 Follow these steps to set up the bot:
