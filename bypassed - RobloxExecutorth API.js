@@ -31,16 +31,18 @@ const logger = winston.createLogger({
 });
 
 async function getApiLink(content, type) {
-    const baseUrl = 'https://api.robloxexecutorth.workers.dev';
-    const endpoints = {
-        fluxus: 'fluxus',
-        linkvertise: 'linkvertise',
-        rekonise: 'rekonise',
-        delta: 'delta',
-        arceusx: 'arceusx',
-        workink: 'workink',
-        mediafire: 'mediafire',
-        codex: 'codex'
+    const baseUrl = "https://api-bypass.robloxexecutorth.workers.dev";
+    const endpoints = { 
+      fluxus: "fluxus",
+      linkvertise: "linkvertise",
+      rekonise: "rekonise",
+      delta: "delta",
+      arceusx: "arceusx",
+      workink: "workink",
+      mediafire: "mediafire",
+      codex: "codex",
+      trigon: "trigon",
+      cryptic: "cryptic",
     };
 
     return endpoints[type] ? `${baseUrl}/${endpoints[type]}?url=${content}` : null;
@@ -194,8 +196,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.type === InteractionType.ApplicationCommand) {
         if (interaction.commandName === 'setbypass') {
             const embed = new EmbedBuilder()
-                .setTitle('✨ | __Bypass Menu__')
-                .setDescription('```Select Yourshit\n\nAPI provided by RobloxExecutorth```')
+                .setDescription('```API provided by RobloxExecutorth```')
                 .setImage('https://i.ibb.co/8Mhm24D/miyako1-1.gif')
                 .setColor(0xffffff);
 
@@ -244,6 +245,16 @@ client.on('interactionCreate', async interaction => {
                         .setCustomId('codex')
                         .setLabel('Codex')
                         .setEmoji('<:Codex:1273713250223259813>')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('trigon')
+                        .setLabel('Trigon')
+                        .setEmoji('<:Trigon:1300786550526709821>')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('cryptic')
+                        .setLabel('Cryptic')
+                        .setEmoji('<:Cryptic:1304387871016222740>')
                         .setStyle(ButtonStyle.Primary)
                 );
 
