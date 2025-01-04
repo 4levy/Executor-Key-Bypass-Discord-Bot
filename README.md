@@ -8,7 +8,7 @@
 
 </div>
 
-## 💻 Installation
+## Installation
 
 Follow these steps to set up the bot:
 
@@ -32,7 +32,7 @@ Follow these steps to set up the bot:
    LOG_CHANNEL_ID=log-channel-id
    ```
 
-## 🚀 Usage
+## Usage
 
 To start the bot:
 
@@ -49,7 +49,7 @@ To start the bot:
 3. **Interact with the bot**:
    Use bot commands in your Discord server to bypass executor keys and supported Linkvertise links.
 
-## 🖥️ API Menus
+## API Menus
 
 <details>
 <summary>Click to view available APIs</summary>
@@ -65,7 +65,7 @@ To start the bot:
 
 </details>
 
-## 👏 Credits
+## Credits
 
 We appreciate the support of the following API providers:
 
@@ -83,7 +83,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 <details>
 <summary>License Summary</summary>
 
-### 🌍 English
+### English
 
 #### ✅ Permissions
 - Commercial use
@@ -98,7 +98,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 #### ⚠️ Conditions
 - License and copyright notice must be included
 
-### 🇹🇭 Thai
+### Thai
 
 #### ✅ สิทธิ์การใช้งาน
 - การใช้งานเชิงพาณิชย์
@@ -121,13 +121,6 @@ If this project has helped you, consider giving it a star on GitHub! Your suppor
 
 [![GitHub stars](https://img.shields.io/github/stars/4levy/Executor-Key-Bypass-Discord-Bot.svg?style=social&label=Star)](https://github.com/4levy/Executor-Key-Bypass-Discord-Bot)
 
-## 🔄 Latest Update
-
-**Last Updated:** Sunday, October 20, 2024
-
-## 📞 Contact
-
-For any questions or concerns, feel free to join our [Discord server](https://discord.gg/TSdpyMMfrU) or open an issue on GitHub.
 
 ---
 
