@@ -60,7 +60,7 @@ To start the bot:
 | Zaneru | ![Zaneru API Menu](https://github.com/user-attachments/assets/ac2025df-ce06-4bff-91c7-12e9cdd13770) |
 | Prince | ![Prince API Menu](https://github.com/user-attachments/assets/4a79f99e-ee49-40d6-baeb-f3bec52161f6) |
 | XKeybypass | ![Xkeybypass API Menu](https://github.com/user-attachments/assets/d0dcfbd3-5b10-4de6-85f1-900886a7e451) |
-| Triple | ![Triple API MENU](https://github.com/user-attachments/assets/21368ed6-50e4-41e2-8beb-6798d024e4a8) |
+| Triple | ![Triple API MENU](https://github.com/user-attachments/assets/f5b33c0f-dbcc-4904-a10d-b21b0cbf25b1) |
 | Kazi | ![Kazi API MENU](https://github.com/user-attachments/assets/87f32f77-0b2c-4e31-a6b2-31b6f79435f4) |
 
 </details>
