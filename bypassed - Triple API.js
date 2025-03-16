@@ -56,7 +56,6 @@ const logger = winston.createLogger({
 async function getApiLink(content, type) {
   const baseUrl = "https://triple.speedx.lol/api/addlink";
 
-  // All types will use the same endpoint since the new API handles all types through the same URL
   return `${baseUrl}?url=${encodeURIComponent(content)}`;
 }
 
@@ -78,7 +77,6 @@ async function processNextRequest(guildId) {
 
         console.log("API Response:", jsonData);
 
-        // Update to match new API response format
         const bypassedLink = jsonData.url || jsonData.result;
         const timeTaken = (Date.now() - startTime) / 1000;
 
