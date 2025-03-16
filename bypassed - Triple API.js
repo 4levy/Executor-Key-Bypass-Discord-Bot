@@ -1,12 +1,33 @@
-require('dotenv').config();
-const { Client, GatewayIntentBits, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, Routes, InteractionType, ActivityType, PermissionsBitField } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const axios = require('axios');
-const { Queue } = require('queue-typescript');
-const { Mutex } = require('async-mutex');
-const winston = require('winston');
+require("dotenv").config();
+const {
+  Client,
+  GatewayIntentBits,
+  PermissionFlagsBits,
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+  Routes,
+  InteractionType,
+  ActivityType,
+  PermissionsBitField,
+} = require("discord.js");
+const { REST } = require("@discordjs/rest");
+const axios = require("axios");
+const { Queue } = require("queue-typescript");
+const { Mutex } = require("async-mutex");
+const winston = require("winston");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
 const serverRequests = new Map();
 const requestQueue = new Map();
 const processingLocks = new Map();
@@ -18,304 +39,308 @@ const errorChannelId = process.env.ERROR_CHANNEL_ID;
 const logChannelId = process.env.LOG_CHANNEL_ID;
 
 const logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp(),
-        winston.format.printf(({ timestamp, level, message }) => `${timestamp} [${level}]: ${message}`)
-    ),
-    transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'Triple.log' })
-    ]
+  level: "info",
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.timestamp(),
+    winston.format.printf(
+      ({ timestamp, level, message }) => `${timestamp} [${level}]: ${message}`
+    )
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "Triple.log" }),
+  ],
 });
 
 async function getApiLink(content, type) {
-    const baseUrl = 'https://triplebypasercsjej.vercel.app/api/bypass';
+  const baseUrl = "https://triple.speedx.lol/api/addlink";
 
-    const endpoints = {
-        codex: 'codex',
-        arceus: 'arceusx',
-        fluxus: 'fluxus',
-        delta: 'delta',
-        cypric: 'cypric',
-        pastebin: 'pastebin',
-        pastedrop: 'pastedrop',
-        mediadire: 'mediafire',
-        rekonise: 'rekonise',
-        linkvertise: 'linkvertise',
-        lootlink: 'lootlink',
-        sub2unlock: 'sub2unlock',
-        sub2get: 'sub2get',
-        sub2io: 'sub2io'
-    };
-
-    if (endpoints[type]) {
-        return `${baseUrl}?link=${encodeURIComponent(content)}`;
-    } else {
-        return null;
-    }
+  // All types will use the same endpoint since the new API handles all types through the same URL
+  return `${baseUrl}?url=${encodeURIComponent(content)}`;
 }
 
 async function processNextRequest(guildId) {
-    if (!processingLocks.has(guildId)) {
-        processingLocks.set(guildId, new Mutex());
-    }
-    const lock = processingLocks.get(guildId);
+  if (!processingLocks.has(guildId)) {
+    processingLocks.set(guildId, new Mutex());
+  }
+  const lock = processingLocks.get(guildId);
 
-    await lock.runExclusive(async () => {
-        const queue = requestQueue.get(guildId);
-        if (queue && queue.length > 0) {
-            const { userId, interaction, apiLink, startTime } = queue.dequeue();
-            serverRequests.get(guildId).set(userId, true);
+  await lock.runExclusive(async () => {
+    const queue = requestQueue.get(guildId);
+    if (queue && queue.length > 0) {
+      const { userId, interaction, apiLink, startTime } = queue.dequeue();
+      serverRequests.get(guildId).set(userId, true);
 
-            try {
-                const response = await axios.get(apiLink);
-                const jsonData = response.data;
+      try {
+        const response = await axios.get(apiLink);
+        const jsonData = response.data;
 
-                console.log('API Response:', jsonData);
+        console.log("API Response:", jsonData);
 
-                const bypassedLink = jsonData.key || jsonData.bypassed || jsonData.result;
-                const timeTaken = (Date.now() - startTime) / 1000;
+        // Update to match new API response format
+        const bypassedLink = jsonData.url || jsonData.result;
+        const timeTaken = (Date.now() - startTime) / 1000;
 
-                let embed;
-                if (bypassedLink) {
-                    embed = new EmbedBuilder()
-                        .setTitle('``✅`` | Bypass Successful!')
-                        .setColor(0x2ECC71)
-                        .setThumbnail(interaction.user.displayAvatarURL())
-                        .addFields(
-                            { name: '🔑 **Bypassed Link:**', value: `\`\`\`diff\n${bypassedLink}\n\`\`\``, inline: false },
-                            { name: '⏱️ **Time Taken:**', value: `\`\`\`yaml\n${timeTaken.toFixed(2)} seconds\n\`\`\``, inline: true },
-                            { name: '📝 **Requested by:**', value: `\`\`\`yaml\n${interaction.user.tag}\n\`\`\``, inline: true }
-                        );
+        let embed;
+        if (bypassedLink) {
+          embed = new EmbedBuilder()
+            .setTitle("``✅`` | Bypass Successful!")
+            .setColor(0x2ecc71)
+            .setThumbnail(interaction.user.displayAvatarURL())
+            .addFields(
+              {
+                name: "🔑 **Bypassed Link:**",
+                value: `\`\`\`diff\n${bypassedLink}\n\`\`\``,
+                inline: false,
+              },
+              {
+                name: "⏱️ **Time Taken:**",
+                value: `\`\`\`yaml\n${timeTaken.toFixed(2)} seconds\n\`\`\``,
+                inline: true,
+              },
+              {
+                name: "📝 **Requested by:**",
+                value: `\`\`\`yaml\n${interaction.user.tag}\n\`\`\``,
+                inline: true,
+              }
+            );
 
-                    const logChannel = client.channels.cache.get(logChannelId);
-                    if (logChannel) {
-                        logChannel.send({ embeds: [embed] });
-                    } else {
-                        logger.error('-> Log channel is incorrect or not found');
-                    }
-
-                } else {
-                    embed = new EmbedBuilder()
-                        .setTitle('``❌`` | Bypass Failed')
-                        .setDescription('\`\`\`diff\n- Unable to process.\n\`\`\`')
-                        .setColor(0xFF0000)
-                        .addFields({ name: '⏱️ Attempt Time:', value: `\`\`\`yaml\n${timeTaken.toFixed(2)} seconds\n\`\`\``, inline: false });
-                }
-
-                await interaction.editReply({ embeds: [embed] });
-
-            } catch (error) {
-                logger.error(`❌ Error: ${error.message}`);
-                const errorEmbed = new EmbedBuilder()
-                    .setTitle('❌ Error')
-                    .setDescription('```API is down, please try again later.```')
-                    .setColor(0xFF0000);
-
-                const errorChannel = client.channels.cache.get(errorChannelId);
-                if (errorChannel) {
-                    errorChannel.send({ embeds: [errorEmbed] });
-                } else {
-                    logger.error('```❌ Error channel is incorrect or not found```');
-                }
-
-                await interaction.editReply({ embeds: [errorEmbed] });
-            } finally {
-                serverRequests.get(guildId).delete(userId);
-                if (queue.length > 0) {
-                    await processNextRequest(guildId);
-                }
-            }
+          const logChannel = client.channels.cache.get(logChannelId);
+          if (logChannel) {
+            logChannel.send({ embeds: [embed] });
+          } else {
+            logger.error("-> Log channel is incorrect or not found");
+          }
+        } else {
+          embed = new EmbedBuilder()
+            .setTitle("``❌`` | Bypass Failed")
+            .setDescription("```diff\n- Unable to process.\n```")
+            .setColor(0xff0000)
+            .addFields({
+              name: "⏱️ Attempt Time:",
+              value: `\`\`\`yaml\n${timeTaken.toFixed(2)} seconds\n\`\`\``,
+              inline: false,
+            });
         }
-    });
+
+        await interaction.editReply({ embeds: [embed] });
+      } catch (error) {
+        logger.error(`❌ Error: ${error.message}`);
+        const errorEmbed = new EmbedBuilder()
+          .setTitle("❌ Error")
+          .setDescription("```API is down, please try again later.```")
+          .setColor(0xff0000);
+
+        const errorChannel = client.channels.cache.get(errorChannelId);
+        if (errorChannel) {
+          errorChannel.send({ embeds: [errorEmbed] });
+        } else {
+          logger.error("```❌ Error channel is incorrect or not found```");
+        }
+
+        await interaction.editReply({ embeds: [errorEmbed] });
+      } finally {
+        serverRequests.get(guildId).delete(userId);
+        if (queue.length > 0) {
+          await processNextRequest(guildId);
+        }
+      }
+    }
+  });
 }
 
-client.once('ready', async () => {
-    try {
-        await client.user.setPresence({
-            activities: [
-                {
-                    name: 'AA',
-                    type: ActivityType.Streaming,
-                    url: 'https://www.twitch.tv/4levy_z1'
-                }
-            ],
-            status: 'idle'
-        });
-        logger.info(`Logged in as ${client.user.tag} | (ID: ${client.user.id})`);
-    } catch (error) {
-        logger.error('Error setting presence:', error);
-    }
-    const rest = new REST({ version: '10' }).setToken(botToken);
-
-    const commands = [
+client.once("ready", async () => {
+  try {
+    await client.user.setPresence({
+      activities: [
         {
-            name: 'setbypass',
-            description: 'Send a bypass Embed ;>',
+          name: "AA",
+          type: ActivityType.Streaming,
+          url: "https://www.twitch.tv/4levy_z1",
         },
-    ];
+      ],
+      status: "idle",
+    });
+    logger.info(`Logged in as ${client.user.tag} | (ID: ${client.user.id})`);
+  } catch (error) {
+    logger.error("Error setting presence:", error);
+  }
+  const rest = new REST({ version: "10" }).setToken(botToken);
 
-    try {
-        await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
-        logger.info('Successfully registered application commands.');
-    } catch (error) {
-        logger.error('Error registering commands:', error);
-    }
+  const commands = [
+    {
+      name: "setbypass",
+      description: "Send a bypass Embed ;>",
+    },
+  ];
+
+  try {
+    await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
+    logger.info("Successfully registered application commands.");
+  } catch (error) {
+    logger.error("Error registering commands:", error);
+  }
 });
 
-client.on('interactionCreate', async interaction => {
-    if (interaction.type === InteractionType.ApplicationCommand) {
-        if (interaction.commandName === 'setbypass') {
-            if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
-                await interaction.reply({ content: '``❌`` | You do not have permission to use this command.', ephemeral: true });
-                return;
-            }
-            const embed = new EmbedBuilder()
-                .setTitle('✨ | __Bypass Menu__')
-                .setDescription('```Select Yourshit\n\nAPI provided by Triple```')
-                .setImage('https://i.ibb.co/8Mhm24D/miyako1-1.gif')
-                .setColor(0xffffff);
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.type === InteractionType.ApplicationCommand) {
+    if (interaction.commandName === "setbypass") {
+      if (
+        !interaction.member.permissions.has(PermissionFlagsBits.Administrator)
+      ) {
+        await interaction.reply({
+          content: "``❌`` | You do not have permission to use this command.",
+          ephemeral: true,
+        });
+        return;
+      }
+      const embed = new EmbedBuilder()
+        .setTitle("✨ | __Bypass Menu__")
+        .setDescription("```Select Yourshit\n\nAPI provided by Triple```")
+        .setImage("https://i.ibb.co/8Mhm24D/miyako1-1.gif")
+        .setColor(0xffffff);
 
-            const row1 = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('fluxus')
-                        .setLabel('Fluxus')
-                        .setEmoji('<:Fluxus:1273680261283971205>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('codex')
-                        .setLabel('Codex')
-                        .setEmoji('<:Codex:1273713250223259813>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('delta')
-                        .setLabel('Delta')
-                        .setEmoji('<:Delta:1273669791093231697>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('cypric')
-                        .setLabel('cypric')
-                        .setEmoji('<:Screenshot20240928105640:1289435624528412745>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('pastebin')
-                        .setLabel('pastebin')
-                        .setEmoji('<:Pastebin:1289435860223262812>')
-                        .setStyle(ButtonStyle.Primary),
-                );
+      const row1 = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId("linkvertise")
+          .setLabel("Linkvertise")
+          .setEmoji("<:Linkvertise:1266787483169849365>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("workink")
+          .setLabel("Work.ink")
+          .setEmoji("<:Workink:1284411465872441426>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("fluxus")
+          .setLabel("Fluxus")
+          .setEmoji("<:Fluxus:1273680261283971205>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("social_unlock")
+          .setLabel("SocialUnlock")
+          .setEmoji("🔓")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("lootlinks")
+          .setLabel("LootLinks")
+          .setEmoji("🎮")
+          .setStyle(ButtonStyle.Primary)
+      );
 
-            const row2 = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('workink')
-                        .setLabel('Workink')
-                        .setEmoji('<:Workink:1284411465872441426>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('rekonise')
-                        .setLabel('Rekonise')
-                        .setEmoji('<:evilBwaa:1267141351015977100>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('arceusx')
-                        .setLabel('ArceusX')
-                        .setEmoji('<:eliv:1267141432523624593>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('lootlink')
-                        .setLabel("Lootlink")
-                        .setEmoji("<:Screenshot20240928103735:1289430809270288424>")
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('pastedrop')
-                        .setLabel("Pastedrop")
-                        .setEmoji("<:hu0gwUZY_400x400:1289436319440699412>")
-                        .setStyle(ButtonStyle.Primary),
+      const row2 = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId("rekonise")
+          .setLabel("Rekonise")
+          .setEmoji("<:evilBwaa:1267141351015977100>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("mediafire")
+          .setLabel("MediaFire")
+          .setEmoji("<:mediafire1:1289437115230322729>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("boostink")
+          .setLabel("Boost.ink")
+          .setEmoji("🚀")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("pastebin")
+          .setLabel("Pastebin")
+          .setEmoji("<:Pastebin:1289435860223262812>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("delta")
+          .setLabel("Delta")
+          .setEmoji("<:Delta:1273669791093231697>")
+          .setStyle(ButtonStyle.Primary)
+      );
 
-                );
+      const row3 = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId("codex")
+          .setLabel("Codex")
+          .setEmoji("<:Codex:1273713250223259813>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("pastedrop")
+          .setLabel("PasteDrop")
+          .setEmoji("<:hu0gwUZY_400x400:1289436319440699412>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("sub2unlock")
+          .setLabel("Sub2unlock")
+          .setEmoji("<:Screenshot20240927025411:1288951814007554119>")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("mboost")
+          .setLabel("MBoost")
+          .setEmoji("⚡")
+          .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId("tinyurl")
+          .setLabel("TinyURL")
+          .setEmoji("🔗")
+          .setStyle(ButtonStyle.Primary)
+      );
 
-            const row3 = new ActionRowBuilder()
-                    .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('mediafire')
-                        .setLabel('Mediafire')
-                        .setEmoji('<:mediafire1:1289437115230322729>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('linkvertise')
-                        .setLabel('Linkvertise')
-                        .setEmoji('<:Linkvertise:1266787483169849365>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('sub2unlock')
-                        .setLabel('Sub2unlock')
-                        .setEmoji('<:Screenshot20240927025411:1288951814007554119>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('sub2get')
-                        .setLabel('Sub2get')
-                        .setEmoji('<:download:1289437984046710795>')
-                        .setStyle(ButtonStyle.Primary),
-                    new ButtonBuilder()
-                        .setCustomId('sub2io')
-                        .setLabel('Sub2io')
-                        .setEmoji('<:download:1289438495370117131>')
-                        .setStyle(ButtonStyle.Primary),
-                        );
-
-            await interaction.reply({ embeds: [embed], components: [row1, row2, row3] });
-        }
-    } else if (interaction.type === InteractionType.MessageComponent) {
-        const type = interaction.customId;
-
-        const modal = new ModalBuilder()
-            .setCustomId(`bypass_${type}`)
-            .setTitle('Enter Your Link');
-
-        const input = new TextInputBuilder()
-            .setCustomId('linkInput')
-            .setLabel('Enter your link here')
-            .setStyle(TextInputStyle.Short)
-            .setPlaceholder(`Enter your ${type} link`)
-            .setRequired(true);
-
-        const modalRow = new ActionRowBuilder().addComponents(input);
-        modal.addComponents(modalRow);
-
-        await interaction.showModal(modal);
-    } else if (interaction.type === InteractionType.ModalSubmit) {
-        const type = interaction.customId.split('_')[1];
-        const link = interaction.fields.getTextInputValue('linkInput');
-
-        const apiLink = await getApiLink(link, type);
-        if (!apiLink) {
-            await interaction.reply({ content: '❌ Invalid link provided.', ephemeral: true });
-            return;
-        }
-
-        await interaction.deferReply({ ephemeral: true });
-
-        const guildId = interaction.guildId;
-        const userId = interaction.user.id;
-
-        if (!requestQueue.has(guildId)) {
-            requestQueue.set(guildId, new Queue());
-        }
-
-        const queue = requestQueue.get(guildId);
-        queue.enqueue({ userId, interaction, apiLink, startTime: Date.now() });
-
-        if (!serverRequests.has(guildId)) {
-            serverRequests.set(guildId, new Map());
-        }
-
-        if (serverRequests.get(guildId).size === 0) {
-            await processNextRequest(guildId);
-        }
+      await interaction.reply({
+        embeds: [embed],
+        components: [row1, row2, row3],
+      });
     }
+  } else if (interaction.type === InteractionType.MessageComponent) {
+    const type = interaction.customId;
+
+    const modal = new ModalBuilder()
+      .setCustomId(`bypass_${type}`)
+      .setTitle("Enter Your Link");
+
+    const input = new TextInputBuilder()
+      .setCustomId("linkInput")
+      .setLabel("Enter your link here")
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder(`Enter your ${type} link`)
+      .setRequired(true);
+
+    const modalRow = new ActionRowBuilder().addComponents(input);
+    modal.addComponents(modalRow);
+
+    await interaction.showModal(modal);
+  } else if (interaction.type === InteractionType.ModalSubmit) {
+    const type = interaction.customId.split("_")[1];
+    const link = interaction.fields.getTextInputValue("linkInput");
+
+    const apiLink = await getApiLink(link, type);
+    if (!apiLink) {
+      await interaction.reply({
+        content: "❌ Invalid link provided.",
+        ephemeral: true,
+      });
+      return;
+    }
+
+    await interaction.deferReply({ ephemeral: true });
+
+    const guildId = interaction.guildId;
+    const userId = interaction.user.id;
+
+    if (!requestQueue.has(guildId)) {
+      requestQueue.set(guildId, new Queue());
+    }
+
+    const queue = requestQueue.get(guildId);
+    queue.enqueue({ userId, interaction, apiLink, startTime: Date.now() });
+
+    if (!serverRequests.has(guildId)) {
+      serverRequests.set(guildId, new Map());
+    }
+
+    if (serverRequests.get(guildId).size === 0) {
+      await processNextRequest(guildId);
+    }
+  }
 });
 
 client.login(botToken);
