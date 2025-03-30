@@ -54,7 +54,7 @@ const logger = winston.createLogger({
 });
 
 async function getApiLink(content, type) {
-  const baseUrl = "https://triple.speedx.lol/api/addlink";
+  const baseUrl = "http://hnode1.roverdev.xyz:27375/api/addlink";
 
   return `${baseUrl}?url=${encodeURIComponent(content)}`;
 }
