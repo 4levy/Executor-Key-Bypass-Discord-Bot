@@ -1,53 +1,11 @@
-# Executor Key & Linkvertise Bypass Discord Bot
 
-<div align="center">
+<p align="center">
+  <a href="https://star-history.com/#4levy/Executor-Key-Bypass-Discord-Bot &Tips-Discord/Cwelium&Date&theme=dark">
+    <img src="https://api.star-history.com/svg?repos=4levy/Executor-Key-Bypass-Discord-Bot&type=Date&theme=dark"">
+  </a>
+</p>
 
-[![Discord](https://img.shields.io/discord/1007520773096886323?color=7289DA&logo=discord&logoColor=white)](https://discord.gg/TSdpyMMfrU)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Stars](https://img.shields.io/github/stars/4levy/Executor-Key-Bypass-Discord-Bot.svg?style=social)](https://github.com/4levy/Executor-Key-Bypass-Discord-Bot/stargazers)
-
-</div>
-
-## Installation
-
-Follow these steps to set up the bot:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/4levy/Executor-Key-Bypass-Discord-Bot.git
-   cd Executor-Key-Bypass-Discord-Bot
-   ```
-
-2. **Install the required dependencies**:
-   ```bash
-   npm install discord.js @discordjs/rest axios queue-typescript async-mutex winston dotenv
-   ```
-
-3. **Configure the Bot**:
-   Create a `.env` file in the project directory and add the following:
-   ```bash
-   BOT_TOKEN=your-bot-token
-   CLIENT_ID=your-client-id
-   ERROR_CHANNEL_ID=error-channel-id
-   LOG_CHANNEL_ID=log-channel-id
-   ```
-
-## Usage
-
-To start the bot:
-
-1. **Run the bot using one of these commands**:
-   ```bash
-   npm start
-   # or
-   node index.js
-   ```
-
-2. **Invite the bot**:
-   Generate an OAuth2 URL from the [Discord Developer Portal](https://discord.com/developers/applications) and invite the bot to your server.
-
-3. **Interact with the bot**:
-   Use bot commands in your Discord server to bypass executor keys and supported Linkvertise links.
+---
 
 ## API Menus
 
@@ -117,17 +75,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 </details>
 
-## ⭐ Support Us
-
-If this project has helped you, consider giving it a star on GitHub! Your support keeps us motivated to improve and maintain the project.
-
-[![GitHub stars](https://img.shields.io/github/stars/4levy/Executor-Key-Bypass-Discord-Bot.svg?style=social&label=Star)](https://github.com/4levy/Executor-Key-Bypass-Discord-Bot)
-
-
 ---
-
-<div align="center">
-
-Made with ❤️ by [4levy](https://github.com/4levy)
-
-</div>
