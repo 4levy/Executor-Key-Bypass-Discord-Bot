@@ -20,7 +20,7 @@
 | XKeybypass | ![Xkeybypass API Menu](https://github.com/user-attachments/assets/d0dcfbd3-5b10-4de6-85f1-900886a7e451) |
 | Triple | ![Triple API MENU](https://github.com/user-attachments/assets/f5b33c0f-dbcc-4904-a10d-b21b0cbf25b1) |
 | Kazi | ![Kazi API MENU](https://github.com/user-attachments/assets/87f32f77-0b2c-4e31-a6b2-31b6f79435f4) |
-| Solar | ![Solar API MENU](https://github.com/user-attachments/assets/df5fe3bc-5151-4a27-b1df-cab2a7cf716b) |
+| Solar | ![Solar API MENU](https://github.com/user-attachments/assets/bcd6e19d-cdc7-405a-8529-94516309e5a0) |
 
 </details>
 
